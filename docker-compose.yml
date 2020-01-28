@@ -1,0 +1,128 @@
+version: '3.7'
+services:
+  mysql:
+    image: mysql:${MYSQL_VERSION}
+    restart: always
+    container_name: mysql
+    hostname: mysql
+    environment:
+      MYSQL_DATABASE: "${MYSQL_DB_NAME}"
+      MYSQL_USER: "${MYSQL_USER_NAME}"
+      MYSQL_PASSWORD: "${MYSQL_USER_PASS}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASS}"
+    ports:
+      - "${MYSQL_PORT}:3306"
+    networks:
+      - mysql
+    expose:
+      - "3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  redis:
+    image: redis:${REDIS_VERSION}
+    restart: always
+    container_name: redis
+    hostname: redis
+    ports:
+        - "${REDIS_PORT}:6379"
+    networks:
+      - redis
+    expose:
+      - "6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    depends_on:
+      - redis-insight
+
+  redis-insight:
+    image: redislabs/redisinsight:${REDIS_INSIGHT_VERSION}
+    restart: always
+    container_name: redis-console
+    ports:
+        - "${REDIS_INSIGHT_PORT}:8001"
+    networks:
+      - redis
+    expose:
+      - "8001"
+
+  zookeeper:
+    image: zookeeper:${ZOOKEEPER_VERSION}
+    restart: always
+    container_name: zookeeper
+    hostname: zookeeper
+    ports:
+      - "${ZOOKEEPER_PORT}:2181"
+    networks:
+      - kafka
+    expose:
+      - "2181"
+    environment:
+        ZOO_MY_ID: 1
+        ZOO_PORT: 2181
+        ZOO_SERVERS: server.1=zookeeper:2888:3888
+    volumes:
+      - zookeeper-data:/data
+      - zookeeper-data-log:/datalog
+
+  kafka:
+    image: confluentinc/cp-kafka:5.3.1
+    restart: always
+    container_name: kafka
+    hostname: kafka
+    ports:
+      - "${KAFKA_PORT}:9092"
+    networks:
+      - kafka
+    expose:
+      - "9092"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:19092,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    depends_on:
+      - zookeeper
+
+  cassandra:
+    image: cassandra:${CASSANDRA_VERSION}
+    restart: always
+    container_name: cassandra
+    ports:
+      - "${CASSANDRA_PORT}:9042"
+    networks:
+      - cassandra
+    expose:
+      - "9042"
+    environment:
+      MAX_HEAP_SIZE: 256M
+      HEAP_NEWSIZE: 128M
+    volumes:
+      - cassandra-data:/var/lib/cassandra
+
+networks:
+  mysql:
+  redis:
+  kafka:
+  cassandra:
+
+# Names our volumes
+volumes:
+  mysql-data:
+    driver: local
+  redis-data:
+    driver: local
+  zookeeper-data:
+    driver: local
+  zookeeper-data-log:
+    driver: local
+  kafka-data:
+    driver: local
+  cassandra-data:
+    driver: local 
