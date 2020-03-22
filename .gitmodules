@@ -1,0 +1,3 @@
+[submodule "packt.com/Hands-On-Software-Architecture-with-Golang"]
+	path = packt.com/Hands-On-Software-Architecture-with-Golang
+	url = https://github.com/PacktPublishing/Hands-On-Software-Architecture-with-Golang

@@ -9,7 +9,7 @@ $ brew install mysql cassandra redis kafka
 
 What... no NSQ? If you do a `brew install nsq`, and then a `brew services start nsq`, you end up in a weird place NSQ-wise...
 
-While `nsqd` will be running, you won't have an `nsqlookupd`. So most of the NSQ examples you find online won't work. If you start an nsqlookupd separately, it still won't work, because the plist file created by the default formula doesn't start nsqd with the necessary arguments to find and use `nsqlookupd`, hence:
+While `nsqd` will be running, you won't have an `nsqlookupd`. So most of the NSQ examples you find online won't work. If you start an `nsqlookupd` separately, it still won't work, because the plist file created by the default formula doesn't start nsqd with the necessary arguments to find and use `nsqlookupd`, hence:
 
 ~~~bash
 $ brew install btubbs/nsq/nsqlookup
