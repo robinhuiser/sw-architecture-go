@@ -4,7 +4,7 @@ My notes, thoughts and code working through "Hands-on software architecture with
 
 ## Prerequisites
 
-First, I [installed the required middleware](./middleware.md) on my MacBook Pro.
+First, I [installed the required middleware](./prereq-middleware.md) on my MacBook Pro.
 
 Next, I added the code examples to my repo under `./packt.com` as a submodule:
 
@@ -20,3 +20,7 @@ $ curl -XGET \
    'https://static.packt-cdn.com/downloads/9781788622592_ColorImages.pdf' \
    -o ./packt.com/9781788622592_ColorImages.pdf
 ~~~
+
+## Chapter notes
+
+* [Chapter 1 - Building Big with Go](./01_building-big-with-go/README.md)
