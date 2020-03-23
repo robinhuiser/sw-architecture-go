@@ -4,7 +4,7 @@ My notes, thoughts and code working through "Hands-on software architecture with
 
 ## Prerequisites
 
-First, I [installed the required middleware](./prereq-middleware.md) on my MacBook Pro.
+First, I [installed the required middleware](./install-middleware.md) on my MacBook Pro.
 
 Next, I added the code examples to my repo under `./packt.com` as a submodule:
 
