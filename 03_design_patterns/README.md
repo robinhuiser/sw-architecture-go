@@ -1,7 +1,7 @@
-# Chapter 1 - Building Big with Go
+# Chapter 3 - Design patterns
 
 My notes reading this chapter and performing the exercises.
 
 ## My takeaways
 
-* TODO
+

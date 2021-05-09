@@ -23,4 +23,6 @@ $ curl -XGET \
 
 ## Chapter notes
 
-* [Chapter 1 - Building Big with Go](./01_building-big-with-go/README.md)
+* [Chapter 1 - Building Big with Go](./01_building_big_with_go/README.md)
+* [Chapter 2 - Packaging Code](./02_packaging_code/README.md)
+* [Chapter 3 - Design Patterns](./03_design_patterns/README.md)

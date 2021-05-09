@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"name": "sw-architecture-go",
+			"path": "."
+		},
+		{
+			"name": "01_building_big_with_go",
+			"path": "01_building_big_with_go"
+		},
+		{
+			"name": "02_packaging_code",
+			"path": "02_packaging_code"
+		},
+		{
+			"path": "03_design_patterns"
+		}
+	],
+	"settings": {}
+}
